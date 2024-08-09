@@ -1,54 +1,52 @@
-
 [
- 
- {
-  "Date": "Upto 2\/4",
-  "Sale_Plan_value": 2358,
-  "Sold_value": 2357.3
- },
- {
-"Date": "3-Apr-24",
-  "Sale_Plan_value": 2358,
-  "Sold_value": 2357.2
- },
- {
-  "Date": "4-Apr-24",
-  "Sale_Plan_value": 2357.70,
-  "Sold_value": 2357.6
- },
- {
-  "Date": "5-Apr-24",
-  "Sale_Plan_value": 2357.50,
-  "Sold_value": 2357.3
- },
- {
-  "Date": "6-Apr-24",
-  "Sale_Plan_value": 2358,
-  "Sold_value": 2357.8
- },
- {
-  "Date": "8-Apr-24",
-  "Sale_Plan_value": 2358,
-  "Sold_value": 2357.4
- },
- {
-  "Date": "9-Apr-24",
-  "Sale_Plan_value": 2357.80,
-  "Sold_value": 2357.2
- },
- {
-  "Date": "10-Apr-24",
-  "Sale_Plan_value": 2358,
-  "Sold_value": 2357.7
- },
- {
-  "Date": "11-Apr-24",
-  "Sale_Plan_value": 2358,
-  "Sold_value": 2357.2
- },
- {
-  "Date": "12-Apr-24",
-  "Sale_Plan_value": 2358,
-  "Sold_value":2357.6
- }
- ]
+  {
+    "Date": "Upto 2/4",
+    "Sale_Plan_value": 2351,
+    "Sold_value": 2357.3
+  },
+  {
+    "Date": "3-Apr-24",
+    "Sale_Plan_value": 2352,
+    "Sold_value": 2357.2
+  },
+  {
+    "Date": "4-Apr-24",
+    "Sale_Plan_value": 2357.7,
+    "Sold_value": 2357.6
+  },
+  {
+    "Date": "5-Apr-24",
+    "Sale_Plan_value": 2357.5,
+    "Sold_value": 2357.3
+  },
+  {
+    "Date": "6-Apr-24",
+    "Sale_Plan_value": 2358,
+    "Sold_value": 2357.8
+  },
+  {
+    "Date": "8-Apr-24",
+    "Sale_Plan_value": 2358,
+    "Sold_value": 2357.4
+  },
+  {
+    "Date": "9-Apr-24",
+    "Sale_Plan_value": 2357.8,
+    "Sold_value": 2357.2
+  },
+  {
+    "Date": "10-Apr-24",
+    "Sale_Plan_value": 2358,
+    "Sold_value": 2357.7
+  },
+  {
+    "Date": "11-Apr-24",
+    "Sale_Plan_value": 2358,
+    "Sold_value": 2357.2
+  },
+  {
+    "Date": "12-Apr-24",
+    "Sale_Plan_value": 2358,
+    "Sold_value": 2357.6
+  }
+]
