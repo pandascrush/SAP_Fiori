@@ -1,0 +1,223 @@
+{
+  "version": 3,
+  "file": "Component-preload.js",
+  "sections": [
+    {
+      "offset": {
+        "line": 1,
+        "column": 0
+      },
+      "map": {
+        "version": 3,
+        "names": [
+          "sap",
+          "ui",
+          "define",
+          "UIComponent",
+          "extend",
+          "metadata",
+          "manifest",
+          "init",
+          "prototype",
+          "apply",
+          "this",
+          "arguments",
+          "getRouter",
+          "initialize"
+        ],
+        "sources": [
+          "Component-dbg.js"
+        ],
+        "mappings": "AAAAA,IAAIC,GAAGC,4BAAO,CACV,2BACD,SAAUC,GACT,aACD,OAAOA,EAAYC,OAAO,oCAAqC,CAC1DC,SAAU,CACNC,SAAU,QAGdC,KAAM,WACFJ,EAAYK,UAAUD,KAAKE,MAAMC,KAAMC,WACvCD,KAAKE,YAAYC,YACrB,GAER",
+        "ignoreList": [],
+        "sourceRoot": ""
+      }
+    },
+    {
+      "offset": {
+        "line": 2,
+        "column": 0
+      },
+      "map": {
+        "version": 3,
+        "names": [
+          "sap",
+          "ui",
+          "define",
+          "Controller",
+          "MessageToast",
+          "JSONModel",
+          "extend",
+          "onInit",
+          "this",
+          "_jsonData",
+          "onFetchData",
+          "that",
+          "apiUrl",
+          "jQuery",
+          "ajax",
+          "url",
+          "method",
+          "dataType",
+          "success",
+          "data",
+          "console",
+          "log",
+          "_displayDataInTable",
+          "error",
+          "show",
+          "onFileChange",
+          "oEvent",
+          "oFileUploader",
+          "getSource",
+          "oFile",
+          "oFileUpload",
+          "files",
+          "_isValidFile",
+          "byId",
+          "setText",
+          "name",
+          "validExtensions",
+          "fileExtension",
+          "split",
+          "pop",
+          "toLowerCase",
+          "includes",
+          "onSubmit",
+          "_processFile",
+          "file",
+          "reader",
+          "FileReader",
+          "onload",
+          "e",
+          "target",
+          "result",
+          "JSON",
+          "parse",
+          "Array",
+          "isArray",
+          "length",
+          "Date",
+          "undefined",
+          "onerror",
+          "readAsText",
+          "onSeeChart",
+          "_displayBarChart",
+          "labels",
+          "map",
+          "item",
+          "values",
+          "Sales_Plan_value",
+          "valuess",
+          "Sold_value",
+          "oVBox",
+          "destroyItems",
+          "barChartContainer",
+          "core",
+          "HTML",
+          "content",
+          "addItem",
+          "setTimeout",
+          "ctx",
+          "document",
+          "getElementById",
+          "getContext",
+          "chart",
+          "Chart",
+          "type",
+          "datasets",
+          "label",
+          "backgroundColor",
+          "borderColor",
+          "borderWidth",
+          "fill",
+          "options",
+          "responsive",
+          "scales",
+          "y",
+          "beginAtZero",
+          "onClick",
+          "evt",
+          "activePoints",
+          "getElementsAtEventForMode",
+          "intersect",
+          "index",
+          "_index",
+          "clickedDate",
+          "_displayFilteredDataInTable",
+          "bind",
+          "setVisible",
+          "filteredData",
+          "filter",
+          "_displaySelectedDataInTable",
+          "oTable",
+          "destroyColumns",
+          "columns",
+          "Object",
+          "keys",
+          "forEach",
+          "col",
+          "addColumn",
+          "m",
+          "Column",
+          "header",
+          "Label",
+          "text",
+          "cells",
+          "Text",
+          "ColumnListItem"
+        ],
+        "sources": [
+          "View1-dbg.controller.js"
+        ],
+        "mappings": "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",
+        "ignoreList": [],
+        "sourceRoot": "controller"
+      }
+    },
+    {
+      "offset": {
+        "line": 3,
+        "column": 0
+      },
+      "map": {
+        "version": 3,
+        "names": [
+          "sap",
+          "ui",
+          "define",
+          "XMLView",
+          "create",
+          "viewName",
+          "then",
+          "oView",
+          "placeAt"
+        ],
+        "sources": [
+          "index-dbg.js"
+        ],
+        "mappings": "AAAAA,IAAIC,GAAGC,wBAAO,CACV,2BACD,SAAUC,GACT,aACAA,EAAQC,OAAO,CACXC,SAAU,uCACXC,KAAK,SAAUC,GACdA,EAAMC,QAAQ,UAClB,EACJ",
+        "ignoreList": [],
+        "sourceRoot": ""
+      }
+    },
+    {
+      "offset": {
+        "line": 4,
+        "column": 0
+      },
+      "map": {
+        "version": 3,
+        "names": [],
+        "sources": [
+          "Component-preload.js?bundle-code-0"
+        ],
+        "mappings": "AAAA;AACA",
+        "sourcesContent": [
+          "sap.ui.require.preload({\n"
+        ],
+        "sourceRoot": ""
+      }
+    }
+  ]
+}

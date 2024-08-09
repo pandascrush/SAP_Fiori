@@ -1,0 +1,25 @@
+_schema-version: '3.1'
+ID: com.yourcompany.ui5app
+version: '1.0.0'  # Corrected from _version to version
+description: "A simple SAPUI5 application"
+modules:
+  - name: ui5app
+    type: html5
+    path: webapp
+    parameters:
+      disk-quota: 256M
+      memory: 256M
+    build-parameters:
+      builder: grunt
+      build-result: dist
+      start: npm run build
+resources:
+  - name: ui5app-destination
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: destination
+      service-plan: lite
+  - name: ui5app-uaa
+    type: com.sap.xs.uaa-space
+    parameters:
+      config-path: xs-security.json
