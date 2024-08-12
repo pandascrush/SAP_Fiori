@@ -2,3 +2,13 @@
     background-color: lightskyblue;
     color: white;
 }
+
+.sapMLabel {
+    white-space: normal !important; /* Allow line breaks */
+}
+
+.sapMText {
+    white-space: normal !important; /* Allow line breaks */
+    overflow: visible !important;   /* Ensure no text is hidden */
+    text-overflow: clip !important; /* Prevent text from being cut off */
+}

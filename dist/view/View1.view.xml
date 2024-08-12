@@ -6,36 +6,34 @@
     controllerName="sap.ui.demo.walkthrough.controller.View1">
     <VBox class="sapUiSmallMargin">
         <Label text="Upload your file" labelFor="fileUploader"/>
-        <unified:FileUploader id="fileUploader" name="myFile" fileType="json" change="onFileChange"/>
-        <Text id="fileNameText" text=""/>   
+        <unified:FileUploader id="fileUploader" name="myFile" fileType="csv" change="onFileChange"/>
+        <Text id="fileNameText" text=""/>
         <Button
             text="Submit"
             press="onSubmit"
             type="Emphasized"/>
-            <Button
+        <Button
             id="fetchDataButton"
             text="Fetch Data from API"
             press="onFetchData"
             type="Emphasized"/>
-            <Button
+        <Button
             id="seeChartButton"
-            text="Seechart"
+            text="See Chart"
             press="onSeeChart"
-            type="Emphasized"/> 
-        <!-- Add Table control to display JSON data -->
-        <Table id="dataTable" inset="false" visible="false">
+            type="Emphasized"/>
+        <!-- <Table id="dataTable" inset="false" visible="false">
             <columns>
-                <!-- Columns will be defined dynamically -->
+                Columns will be defined dynamically
             </columns>
             <items>
                 <ColumnListItem>
-                    <!-- Cells will be defined dynamically -->
+                    Cells will be defined dynamically
                 </ColumnListItem>
             </items>
-        </Table>
-        <!-- Add a VBox to hold the bar chart -->
-        <VBox id="barChartVBox" visible="false">
-            <!-- Bar chart will be rendered here -->
+        </Table> -->
+        <VBox id="combinedChartVBox" visible="false">
+            <!-- Combined bar and line chart will be rendered here -->
         </VBox>
         <Table id="selectedDataTable" inset="false" visible="false">
             <columns>
@@ -48,34 +46,4 @@
             </items>
         </Table>
     </VBox>
-    <VBox class="sapUiSmallMargin">
-        <Label text="Month:"></Label>
-        <ComboBox id="combomonth"></ComboBox>
-    </VBox>
-   <!-- <App >
-        <pages>
-            <Page >
-                <content>
-                    <HBox alignItems="Center" justifyContent="Center">
-                        <Title text="MIS REPORT" level="H1" titleStyle="H1"></Title>
-                    </HBox>
-                    <HBox class="sapUiSmallMargin">
-                        <Label text="Month:" class="sapUiSmallMargin" textAlign="Center"></Label>
-                         <ComboBox id="monthComboBox" items="{/Months}">
-                                <core:Item key="{Month}" text="{Month}" />
-                            </ComboBox>
-                        <HBox alignItems="End">
-                        
-                            <Label text="Upload file :" class="sapUiSmallMargin" textAlign="Center" ></Label>
-                            <unified:FileUploader id="fileUploader" name="myFile" fileType="json"  change="onFileChange" />
-                        </HBox>
-                        <VBox alignItems="End">
-                        
-                            <Button text="Upload" press="onSubmit" class="customButton"   type="Emphasized"></Button>
-                        </VBox>
-                    </HBox>
-                </content>            
-            </Page>
-        </pages>
-   </App> -->
 </mvc:View>
