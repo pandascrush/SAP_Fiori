@@ -9,25 +9,24 @@ sap.ui.define(
 
     return Controller.extend("sap.ui.demo.walkthrough.controller.View1", {
       onInit: function () {
-        this._jsonData = null; // Store the JSON data here
-        this._chart = null; // Store the chart instance here
+        // Create and set the model for the view
+        var oModel = new JSONModel({
+          metrics: [
+            { key: "Select the Option", text: "Select the Option" },
+            { key: "Balnc_Prodn_value", text: "Balnc Prodn Value" },
+            { key: "Colln", text: "Collection" },
+            { key: "Paymt", text: "Payment" },
+          ],
+        });
+
+        this.getView().setModel(oModel);
       },
 
       onFileChange: function (oEvent) {
-        var oFileUploader = oEvent.getSource();
-        var oFile = oFileUploader.oFileUpload.files[0];
-
-        if (oFile) {
-          if (this._isValidFile(oFile)) {
-            this.byId("fileNameText").setText("Selected file: " + oFile.name);
-          } else {
-            this.byId("fileNameText").setText(
-              "Invalid file type. Please upload a CSV file."
-            );
-          }
-        } else {
-          this.byId("fileNameText").setText("");
-        }
+        // Handle file change event
+        var oFileUploader = this.byId("fileUploader");
+        var sFileName = oFileUploader.getValue();
+        this.byId("fileNameText").setText(sFileName);
       },
 
       _isValidFile: function (oFile) {
@@ -117,7 +116,10 @@ sap.ui.define(
 
             that._jsonData = mergedData;
             that._displayDataInTable(mergedData);
-            that._displayCombinedChart(mergedData);
+
+            // Initially hide the select box and chart container
+            that.byId("metricSelect").setVisible(false);
+            that.byId("combinedChartVBox").setVisible(false);
           },
           error: function (error) {
             console.error("Error fetching data from API:", error);
@@ -158,8 +160,8 @@ sap.ui.define(
         var oTable = this.byId("dataTable");
 
         // Clear existing table content
-        // oTable.destroyColumns();
-        // oTable.destroyItems();
+        oTable.destroyColumns();
+        oTable.destroyItems();
 
         if (data.length > 0) {
           // Create columns dynamically based on JSON keys
@@ -167,7 +169,13 @@ sap.ui.define(
           columns.forEach(function (col) {
             oTable.addColumn(
               new sap.m.Column({
-                header: new sap.m.Label({ text: col }),
+                header: new sap.m.Label({
+                  text: col,
+                  wrapping: true, // Enable text wrapping
+                  tooltip: col, // Show full text on hover
+                }),
+                width: "auto", // Set width to auto-adjust to content
+                minScreenWidth: "Small", // Ensure visibility on smaller screens
               })
             );
           });
@@ -192,65 +200,131 @@ sap.ui.define(
         }
       },
 
+      onShowSelectBox: function () {
+        // Show the select box and chart container
+        this.byId("metricSelect").setVisible(true);
+        this.byId("combinedChartVBox").setVisible(true);
+      },
+
       onSeeChart: function () {
         if (!this._jsonData) {
           MessageToast.show("Please upload a file first.");
           return;
         }
 
-        this._displayCombinedChart(this._jsonData);
+        var barLabel = "Net Price (Bar)";
+        var line1Label = "Sales Plan Value (Line)"; // Default line chart
+        var line2Label = this._selectedMetric
+          ? this._selectedMetric + " (Line)"
+          : null;
+
+        // Create or update the chart
+        if (!this._chart) {
+          // Display the initial chart
+          this._displayCombinedChart(
+            this._jsonData,
+            barLabel,
+            line1Label,
+            null
+          );
+        } else if (line2Label) {
+          // Add a new line chart to the existing chart
+          this._addAdditionalLineChart(this._jsonData, line2Label);
+        }
+
+        // Show the select box after the chart is rendered
+        this.byId("metricSelect").setVisible(true);
       },
 
-      _displayCombinedChart: function (data) {
+      onSelectChange: function (oEvent) {
+        // Get all selected items
+        var selectedItems = oEvent.getSource().getSelectedItems();
+        var selectedKeys = selectedItems.map(function (item) {
+          return item.getKey();
+        });
+
+        // Update the selected metrics
+        this._selectedMetrics = selectedKeys;
+
+        if (this._jsonData) {
+          // Display combined chart with all selected metrics
+          this._displayCombinedChart(this._jsonData, this._selectedMetrics);
+        }
+      },
+
+      _displayCombinedChart: function (data, selectedMetrics) {
         var labels = data.map(function (item) {
           return item.Date;
         });
-        var barvalue = data.map(function (item) {
+
+        var barValue = data.map(function (item) {
           return item.Net_Price;
         });
-        var values = data.map(function (item) {
-          return item.Sales_Plan_value;
-        });
-        console.log(barvalue);
 
-        // Create the combined chart container
+        // Initialize selectedMetrics if it's not an array
+        if (!Array.isArray(selectedMetrics)) {
+          selectedMetrics = [];
+        }
+
+        // Default datasets: static bar chart and initial line chart
+        var datasets = [
+          {
+            type: "bar",
+            label: "Net Price",
+            data: barValue,
+            backgroundColor: "rgba(75, 192, 192, 0.2)",
+            borderColor: "rgba(75, 192, 192, 1)",
+            borderWidth: 1,
+          },
+          {
+            type: "line",
+            label: "Sales_Plan_value (Line)",
+            data: data.map(function (item) {
+              return item.Sales_Plan_value || 0; // Handle missing data
+            }),
+            borderColor: "rgba(54, 162, 235, 1)",
+            fill: false,
+          },
+        ];
+
+        // Add line charts based on selected metrics
+        selectedMetrics.forEach(function (metric) {
+          datasets.push({
+            type: "line",
+            label: metric + " (Line)",
+            data: data.map(function (item) {
+              return item[metric] || 0; // Handle missing data
+            }),
+            borderColor: "rgba(255, 159, 64, 1)",
+            fill: false,
+          });
+        });
+
+        // Create or update the combined chart container
         var oVBox = this.byId("combinedChartVBox");
-        oVBox.destroyItems();
-        var combinedChartContainer = new sap.ui.core.HTML({
-          content:
-            "<canvas id='combinedChart' style='width: 100%; height: 400px;'></canvas>",
-        });
-        oVBox.addItem(combinedChartContainer);
+        if (oVBox.getItems().length === 0) {
+          var combinedChartContainer = new sap.ui.core.HTML({
+            content:
+              "<canvas id='combinedChart' style='width: 100%; height: 400px;'></canvas>",
+          });
+          oVBox.addItem(combinedChartContainer);
+        }
 
-        // Create the combined chart
+        // Create or update the chart
         setTimeout(
           function () {
             var ctx = document.getElementById("combinedChart").getContext("2d");
+
             if (this._chart) {
               this._chart.destroy(); // Destroy existing chart if it exists
             }
-            var that = this;
+
+            // Initialize a new Chart instance
             this._chart = new Chart(ctx, {
-              type: "bar", // Set type to bar initially
+              type: "bar", // Default chart type
               data: {
                 labels: labels,
-                datasets: [
-                  {
-                    type: "bar",
-                    label: "Sales Plan Value (Bar)",
-                    data: barvalue,
-                    backgroundColor: "rgba(75, 192, 192, 0.2)",
-                    borderColor: "rgba(75, 192, 192, 1)",
-                    borderWidth: 1,
-                  },
-                  {
-                    type: "line",
-                    label: "Sales Plan Value (Line)",
-                    data: values,
-                    borderColor: "rgba(255, 99, 132, 1)",
-                    fill: false,
-                  },
-                ],
+                datasets: datasets,
               },
               options: {
                 responsive: true,
@@ -262,22 +336,48 @@ sap.ui.define(
                 onClick: function (evt, elements) {
                   if (elements.length > 0) {
                     var firstElement = elements[0];
-                    var datasetIndex = firstElement.datasetIndex; // Get the dataset index
                     var index = firstElement._index; // Get the data index within the dataset
-                    console.log(index);
-                    var clickedDate = that._chart.data.labels[index]; // Access the labels array
-                    console.log(clickedDate);
+                    var clickedDate = this._chart.data.labels[index]; // Access the labels array
                     console.log("Clicked Date:", clickedDate);
-                    that._displayFilteredDataInTable(clickedDate);
+                    this._displayFilteredDataInTable(clickedDate);
                   }
-                },
+                }.bind(this),
               },
             });
+
+            // Explicitly call update to ensure the chart is rendered with new data
+            this._chart.update();
           }.bind(this),
           500
         );
 
+        // Ensure the chart container is visible
         oVBox.setVisible(true);
+      },
+
+      _addAdditionalLineChart: function (data, line2Label) {
+        var labels = data.map(function (item) {
+          return item.Date;
+        });
+
+        var line2Values = data.map(
+          function (item) {
+            return item[this._selectedMetric]; // Dynamic line chart values
+          }.bind(this)
+        );
+
+        // Add new line chart dataset
+        if (this._chart) {
+          this._chart.data.datasets.push({
+            type: "line",
+            label: line2Label,
+            data: line2Values,
+            borderColor: "rgba(54, 162, 235, 1)",
+            fill: false,
+          });
+
+          this._chart.update(); // Update the chart with new dataset
+        }
       },
 
       _displayFilteredDataInTable: function (date) {
@@ -297,7 +397,13 @@ sap.ui.define(
           columns.forEach(function (col) {
             oTable.addColumn(
               new sap.m.Column({
-                header: new sap.m.Label({ text: col }),
+                header: new sap.m.Label({
+                  text: col,
+                  wrapping: true, // Enable text wrapping
+                  tooltip: col, // Show full text on hover
+                }),
+                width: "auto", // Set width to auto-adjust to content
+                minScreenWidth: "Small", // Ensure visibility on smaller screens
               })
             );
           });

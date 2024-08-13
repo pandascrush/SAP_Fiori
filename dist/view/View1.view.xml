@@ -1,40 +1,35 @@
 <mvc:View
     xmlns="sap.m"
     xmlns:mvc="sap.ui.core.mvc"
-    xmlns:unified="sap.ui.unified"
     xmlns:core="sap.ui.core"
-    controllerName="sap.ui.demo.walkthrough.controller.View1">
+    xmlns:unified="sap.ui.unified"
+    controllerName="sap.ui.demo.walkthrough.controller.View1"
+>
     <VBox class="sapUiSmallMargin">
-        <Label text="Upload your file" labelFor="fileUploader"/>
-        <unified:FileUploader id="fileUploader" name="myFile" fileType="csv" change="onFileChange"/>
-        <Text id="fileNameText" text=""/>
-        <Button
-            text="Submit"
-            press="onSubmit"
-            type="Emphasized"/>
-        <Button
-            id="fetchDataButton"
-            text="Fetch Data from API"
-            press="onFetchData"
-            type="Emphasized"/>
-        <Button
-            id="seeChartButton"
-            text="See Chart"
-            press="onSeeChart"
-            type="Emphasized"/>
-        <!-- <Table id="dataTable" inset="false" visible="false">
-            <columns>
-                Columns will be defined dynamically
-            </columns>
+        <Label text="Upload your file" labelFor="fileUploader" />
+        <unified:FileUploader id="fileUploader" name="myFile" fileType="csv" change="onFileChange" />
+        <Text id="fileNameText" text="" />
+        <Button text="Submit" press="onSubmit" type="Emphasized" />
+        <Button id="fetchDataButton" text="Fetch Data from API" press="onFetchData" type="Emphasized" />
+        
+        <!-- The select box is initially hidden -->
+        <MultiComboBox id="metricSelect"
+            items="{/metrics}"
+            visible="false"
+            selectionChange="onSelectChange">
             <items>
-                <ColumnListItem>
-                    Cells will be defined dynamically
-                </ColumnListItem>
+                <core:Item key="{key}" text="{text}" />
             </items>
-        </Table> -->
+        </MultiComboBox>
+        
+        <!-- The button to see the chart -->
+        <Button id="seeChartButton" text="See Chart" press="onSeeChart" type="Emphasized" />
+        
+        <!-- The chart container is initially hidden -->
         <VBox id="combinedChartVBox" visible="false">
             <!-- Combined bar and line chart will be rendered here -->
         </VBox>
+        
         <Table id="selectedDataTable" inset="false" visible="false">
             <columns>
                 <!-- Columns will be defined dynamically -->
